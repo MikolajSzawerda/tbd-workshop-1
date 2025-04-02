@@ -53,8 +53,15 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ***why does ORC not require a table schema?***
 
 11. Find and correct the error in spark-job.py
+    **Cause**
+    Incorrect name of the bucket in `spark-job.py`
 
-    ***describe the cause and how to find the error***
+    **How to find**
+    Task with incorrect bucket name is failing. In task view there is log with the exact error:
+    ![spark_failed.png](tasks-phase1/spark-failed.png)
+
+    **How to fix**
+    Change the name of the bucket to correct name, in our case `tbd-2025l-318731-data`
 
 12. Add support for preemptible/spot instances in a Dataproc cluster
 
