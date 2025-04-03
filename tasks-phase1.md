@@ -28,6 +28,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    
 7. Reach YARN UI
    
+   working on it...
    ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
    
 8. Draw an architecture diagram (e.g. in draw.io) that includes:
