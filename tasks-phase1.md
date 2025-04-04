@@ -70,7 +70,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ![Select results](tasks-phase1/big_query_results_shakespeare.png)
 
     **Why does ORC not require a table schema?**
-    *fix*
+    The ORC (Optimized Row Columnar) format embeds the schema directly within the file, eliminating the need for an external table schema
 
 11. Find and correct the error in spark-job.py
 
@@ -84,8 +84,18 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     **How to fix:**
     Change the name of the bucket to correct name, in our case `tbd-2025l-318731-data`
 
+    **After the fix:**
+    ![spark_success.png](tasks-phase1/spark-success.png)
+
 12. Add support for preemptible/spot instances in a Dataproc cluster
 
-    ***place the link to the modified file and inserted terraform code***
+    [Modified file](modules/dataproc/main.tf)
+
+    **Inserted terraform code**
     
+    ```tf
+    preemptible_worker_config {
+      num_instances = 1
+    }
+    ```
     
