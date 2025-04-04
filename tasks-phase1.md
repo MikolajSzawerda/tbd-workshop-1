@@ -28,6 +28,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    
 7. Reach YARN UI
    
+   working on it...
    ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
    
 8. Draw an architecture diagram (e.g. in draw.io) that includes:
@@ -73,7 +74,6 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     The ORC (Optimized Row Columnar) format embeds the schema directly within the file, eliminating the need for an external table schema
 
 11. Find and correct the error in spark-job.py
-
     **Cause:**
     Incorrect name of the bucket in `spark-job.py`
 
