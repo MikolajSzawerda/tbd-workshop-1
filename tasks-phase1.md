@@ -27,23 +27,49 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     ***describe one selected module and put the output of terraform graph for this module here***
    
 7. Reach YARN UI
-   
-   working on it...
-   ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
-   
+   ```shell
+   gcloud compute ssh tbd-cluster-m --project=tbd-2025l-318731 --zone=europe-west1-d -- -L 8088:localhost:8088
+   ```
+   ![yarn_ui_ss1](doc/yarn_ui_ss1.png)
+   ![yarn_ui_ss2](doc/yarn_ui_ss2.png)
+
 8. Draw an architecture diagram (e.g. in draw.io) that includes:
     1. VPC topology with service assignment to subnets
     2. Description of the components of service accounts
     3. List of buckets for disposal
     4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
   
-    ***place your diagram here***
+    ![architecture_diagram](doc/tbd-task-8.png)
 
 9. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
 create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml) 
+   ```yaml
+   version: 0.1
+    usage:
+      google_artifact_registry.registry:
+        storage_gb: 60
 
-   ***place the expected consumption you entered here***
+      google_storage_bucket.tbd_code_bucket:
+        storage_gb: 200
+        monthly_class_a_operations: 100
+        monthly_class_b_operations: 300
+        monthly_egress_data_gb: 70
+
+      google_storage_bucket.tbd_data_bucket:
+        storage_gb: 400
+        monthly_class_a_operations: 100
+        monthly_class_b_operations: 300
+        monthly_egress_data_transfer_gb:
+          same_continent: 90
+          worldwide: 40
+          asia: 20
+          china: 0
+
+      google_service_networking_connection.private_vpc_connection:
+        monthly_data_processed_gb: 200
+
+   ```
 
    ***place the screenshot from infracost output here***
 
