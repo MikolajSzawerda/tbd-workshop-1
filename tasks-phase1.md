@@ -70,8 +70,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
         monthly_data_processed_gb: 200
 
    ```
-
-   ***place the screenshot from infracost output here***
+  ![infracost_output](doc/infracost_output.png)
 
 10. Create a BigQuery dataset and an external table using SQL
 
