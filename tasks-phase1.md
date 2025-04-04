@@ -47,20 +47,41 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
    ***place the screenshot from infracost output here***
 
 10. Create a BigQuery dataset and an external table using SQL
-    
-    ***place the code and output here***
-   
-    ***why does ORC not require a table schema?***
+
+    **Code**
+    ```sql
+    CREATE SCHEMA `tbd-2025l-318731.bq_dataset`
+    OPTIONS (
+    location = 'europe-west1'
+    );
+
+    CREATE EXTERNAL TABLE `tbd-2025l-318731.bq_dataset.shakespeare`
+        OPTIONS (
+            format = "ORC",
+            uris = ["gs://tbd-2025l-318731-data/data/shakespeare/*.orc"]
+        );
+
+
+    SELECT * FROM `tbd-2025l-318731.bq_dataset.shakespeare` LIMIT 10;
+    ```
+
+    **Output**
+    ![SQL tasks](tasks-phase1/big_query_results.png)
+    ![Select results](tasks-phase1/big_query_results_shakespeare.png)
+
+    **Why does ORC not require a table schema?**
+    *fix*
 
 11. Find and correct the error in spark-job.py
-    **Cause**
+
+    **Cause:**
     Incorrect name of the bucket in `spark-job.py`
 
-    **How to find**
+    **How to find:**
     Task with incorrect bucket name is failing. In task view there is log with the exact error:
     ![spark_failed.png](tasks-phase1/spark-failed.png)
 
-    **How to fix**
+    **How to fix:**
     Change the name of the bucket to correct name, in our case `tbd-2025l-318731-data`
 
 12. Add support for preemptible/spot instances in a Dataproc cluster
