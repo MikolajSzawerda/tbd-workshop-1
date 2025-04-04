@@ -1,5 +1,5 @@
 version: 0.1
- usage:
+usage:
    google_artifact_registry.registry:
      storage_gb: 60
 
