@@ -1,0 +1,201 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  "data.google_client_config.provider" [label="data.google_client_config.provider"];
+  "data.google_container_cluster.composer-gke-cluster" [label="data.google_container_cluster.composer-gke-cluster"];
+  "google_compute_firewall.allow-all-internal" [label="google_compute_firewall.allow-all-internal"];
+  "kubernetes_service.dbt-task-service" [label="kubernetes_service.dbt-task-service"];
+  subgraph "cluster_module.composer" {
+    label = "module.composer"
+    fontname = "sans-serif"
+    "module.composer.google_compute_subnetwork.composer-subnet" [label="google_compute_subnetwork.composer-subnet"];
+    "module.composer.google_project_iam_member.composer-member" [label="google_project_iam_member.composer-member"];
+    "module.composer.google_project_iam_member.dataproc-editor-iam" [label="google_project_iam_member.dataproc-editor-iam"];
+    "module.composer.google_project_iam_member.dataproc-sa-user-iam" [label="google_project_iam_member.dataproc-sa-user-iam"];
+    "module.composer.google_project_service.api" [label="google_project_service.api"];
+    "module.composer.google_service_account.tbd-composer-sa" [label="google_service_account.tbd-composer-sa"];
+  }
+  subgraph "cluster_module.composer.module.composer" {
+    label = "module.composer.module.composer"
+    fontname = "sans-serif"
+    "module.composer.module.composer.data.google_project.project" [label="data.google_project.project"];
+    "module.composer.module.composer.google_composer_environment.composer_env" [label="google_composer_environment.composer_env"];
+    "module.composer.module.composer.google_project_iam_member.composer_agent_service_account" [label="google_project_iam_member.composer_agent_service_account"];
+  }
+  subgraph "cluster_module.data-pipelines" {
+    label = "module.data-pipelines"
+    fontname = "sans-serif"
+    "module.data-pipelines.google_storage_bucket.tbd-code-bucket" [label="google_storage_bucket.tbd-code-bucket"];
+    "module.data-pipelines.google_storage_bucket.tbd-data-bucket" [label="google_storage_bucket.tbd-data-bucket"];
+    "module.data-pipelines.google_storage_bucket_iam_member.tbd-code-bucket-iam-viewer" [label="google_storage_bucket_iam_member.tbd-code-bucket-iam-viewer"];
+    "module.data-pipelines.google_storage_bucket_iam_member.tbd-data-bucket-iam-editor" [label="google_storage_bucket_iam_member.tbd-data-bucket-iam-editor"];
+    "module.data-pipelines.google_storage_bucket_object.dag-code" [label="google_storage_bucket_object.dag-code"];
+    "module.data-pipelines.google_storage_bucket_object.dbt-dag-code" [label="google_storage_bucket_object.dbt-dag-code"];
+    "module.data-pipelines.google_storage_bucket_object.job-code" [label="google_storage_bucket_object.job-code"];
+  }
+  subgraph "cluster_module.dataproc" {
+    label = "module.dataproc"
+    fontname = "sans-serif"
+    "module.dataproc.google_dataproc_cluster.tbd-dataproc-cluster" [label="google_dataproc_cluster.tbd-dataproc-cluster"];
+    "module.dataproc.google_project_service.dataproc" [label="google_project_service.dataproc"];
+  }
+  subgraph "cluster_module.dbt_docker_image" {
+    label = "module.dbt_docker_image"
+    fontname = "sans-serif"
+    "module.dbt_docker_image.docker_image.dbt" [label="docker_image.dbt"];
+    "module.dbt_docker_image.docker_registry_image.dbt" [label="docker_registry_image.dbt"];
+  }
+  subgraph "cluster_module.gcr" {
+    label = "module.gcr"
+    fontname = "sans-serif"
+    "module.gcr.google_artifact_registry_repository.registry" [label="google_artifact_registry_repository.registry"];
+    "module.gcr.google_project_service.api" [label="google_project_service.api"];
+  }
+  subgraph "cluster_module.jupyter_docker_image" {
+    label = "module.jupyter_docker_image"
+    fontname = "sans-serif"
+    "module.jupyter_docker_image.docker_image.jupyter" [label="docker_image.jupyter"];
+    "module.jupyter_docker_image.docker_registry_image.jupyterlab" [label="docker_registry_image.jupyterlab"];
+  }
+  subgraph "cluster_module.vertex_ai_workbench" {
+    label = "module.vertex_ai_workbench"
+    fontname = "sans-serif"
+    "module.vertex_ai_workbench.data.google_project.project" [label="data.google_project.project"];
+    "module.vertex_ai_workbench.google_notebooks_instance.tbd_notebook" [label="google_notebooks_instance.tbd_notebook"];
+    "module.vertex_ai_workbench.google_project_iam_binding.token_creator_role" [label="google_project_iam_binding.token_creator_role"];
+    "module.vertex_ai_workbench.google_project_service.notebooks" [label="google_project_service.notebooks"];
+    "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" [label="google_storage_bucket.notebook-conf-bucket"];
+    "module.vertex_ai_workbench.google_storage_bucket_iam_binding.binding" [label="google_storage_bucket_iam_binding.binding"];
+    "module.vertex_ai_workbench.google_storage_bucket_object.post-startup" [label="google_storage_bucket_object.post-startup"];
+  }
+  subgraph "cluster_module.vpc" {
+    label = "module.vpc"
+    fontname = "sans-serif"
+    "module.vpc.google_compute_firewall.default-internal-allow-all" [label="google_compute_firewall.default-internal-allow-all"];
+    "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap" [label="google_compute_firewall.fw-allow-ingress-from-iap"];
+  }
+  subgraph "cluster_module.vpc.module.cloud-router" {
+    label = "module.vpc.module.cloud-router"
+    fontname = "sans-serif"
+    "module.vpc.module.cloud-router.google_compute_router.router" [label="google_compute_router.router"];
+    "module.vpc.module.cloud-router.google_compute_router_nat.nats" [label="google_compute_router_nat.nats"];
+  }
+  subgraph "cluster_module.vpc.module.vpc.module.firewall_rules" {
+    label = "module.vpc.module.vpc.module.firewall_rules"
+    fontname = "sans-serif"
+    "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules" [label="google_compute_firewall.rules"];
+    "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress" [label="google_compute_firewall.rules_ingress_egress"];
+  }
+  subgraph "cluster_module.vpc.module.vpc.module.routes" {
+    label = "module.vpc.module.vpc.module.routes"
+    fontname = "sans-serif"
+    "module.vpc.module.vpc.module.routes.google_compute_route.route" [label="google_compute_route.route"];
+  }
+  subgraph "cluster_module.vpc.module.vpc.module.subnets" {
+    label = "module.vpc.module.vpc.module.subnets"
+    fontname = "sans-serif"
+    "module.vpc.module.vpc.module.subnets.google_compute_subnetwork.subnetwork" [label="google_compute_subnetwork.subnetwork"];
+  }
+  subgraph "cluster_module.vpc.module.vpc.module.vpc" {
+    label = "module.vpc.module.vpc.module.vpc"
+    fontname = "sans-serif"
+    "module.vpc.module.vpc.module.vpc.google_compute_network.network" [label="google_compute_network.network"];
+    "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host" [label="google_compute_shared_vpc_host_project.shared_vpc_host"];
+  }
+  "data.google_container_cluster.composer-gke-cluster" -> "module.composer.module.composer.google_composer_environment.composer_env";
+  "google_compute_firewall.allow-all-internal" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "kubernetes_service.dbt-task-service" -> "data.google_client_config.provider";
+  "kubernetes_service.dbt-task-service" -> "data.google_container_cluster.composer-gke-cluster";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.composer.google_compute_subnetwork.composer-subnet" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.composer.google_project_iam_member.composer-member" -> "module.composer.google_service_account.tbd-composer-sa";
+  "module.composer.google_project_iam_member.dataproc-editor-iam" -> "module.composer.google_service_account.tbd-composer-sa";
+  "module.composer.google_project_iam_member.dataproc-sa-user-iam" -> "module.composer.google_service_account.tbd-composer-sa";
+  "module.composer.google_project_service.api" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.composer.google_project_service.api" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.composer.google_project_service.api" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.composer.google_project_service.api" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.composer.google_project_service.api" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.composer.google_project_service.api" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.composer.google_project_service.api" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.composer.google_service_account.tbd-composer-sa" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.composer.module.composer.data.google_project.project" -> "module.composer.google_project_iam_member.composer-member";
+  "module.composer.module.composer.data.google_project.project" -> "module.composer.google_project_service.api";
+  "module.composer.module.composer.google_composer_environment.composer_env" -> "module.composer.google_compute_subnetwork.composer-subnet";
+  "module.composer.module.composer.google_composer_environment.composer_env" -> "module.composer.module.composer.google_project_iam_member.composer_agent_service_account";
+  "module.composer.module.composer.google_composer_environment.composer_env" -> "module.dataproc.google_dataproc_cluster.tbd-dataproc-cluster";
+  "module.composer.module.composer.google_project_iam_member.composer_agent_service_account" -> "module.composer.module.composer.data.google_project.project";
+  "module.data-pipelines.google_storage_bucket_iam_member.tbd-code-bucket-iam-viewer" -> "module.composer.google_service_account.tbd-composer-sa";
+  "module.data-pipelines.google_storage_bucket_iam_member.tbd-code-bucket-iam-viewer" -> "module.data-pipelines.google_storage_bucket.tbd-code-bucket";
+  "module.data-pipelines.google_storage_bucket_iam_member.tbd-data-bucket-iam-editor" -> "module.composer.google_service_account.tbd-composer-sa";
+  "module.data-pipelines.google_storage_bucket_iam_member.tbd-data-bucket-iam-editor" -> "module.data-pipelines.google_storage_bucket.tbd-data-bucket";
+  "module.data-pipelines.google_storage_bucket_object.dag-code" -> "module.composer.module.composer.google_composer_environment.composer_env";
+  "module.data-pipelines.google_storage_bucket_object.dbt-dag-code" -> "module.composer.module.composer.google_composer_environment.composer_env";
+  "module.data-pipelines.google_storage_bucket_object.job-code" -> "module.data-pipelines.google_storage_bucket.tbd-code-bucket";
+  "module.dataproc.google_dataproc_cluster.tbd-dataproc-cluster" -> "module.dataproc.google_project_service.dataproc";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.dataproc.google_project_service.dataproc" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.dbt_docker_image.docker_image.dbt" -> "module.composer.google_project_iam_member.dataproc-editor-iam";
+  "module.dbt_docker_image.docker_image.dbt" -> "module.composer.google_project_iam_member.dataproc-sa-user-iam";
+  "module.dbt_docker_image.docker_image.dbt" -> "module.composer.module.composer.google_composer_environment.composer_env";
+  "module.dbt_docker_image.docker_image.dbt" -> "module.gcr.google_artifact_registry_repository.registry";
+  "module.dbt_docker_image.docker_registry_image.dbt" -> "module.dbt_docker_image.docker_image.dbt";
+  "module.gcr.google_artifact_registry_repository.registry" -> "module.gcr.google_project_service.api";
+  "module.jupyter_docker_image.docker_image.jupyter" -> "module.gcr.google_artifact_registry_repository.registry";
+  "module.jupyter_docker_image.docker_registry_image.jupyterlab" -> "module.jupyter_docker_image.docker_image.jupyter";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.jupyter_docker_image.docker_registry_image.jupyterlab";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.vertex_ai_workbench.data.google_project.project" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.vertex_ai_workbench.google_notebooks_instance.tbd_notebook" -> "module.vertex_ai_workbench.google_project_service.notebooks";
+  "module.vertex_ai_workbench.google_notebooks_instance.tbd_notebook" -> "module.vertex_ai_workbench.google_storage_bucket_object.post-startup";
+  "module.vertex_ai_workbench.google_project_iam_binding.token_creator_role" -> "module.vertex_ai_workbench.data.google_project.project";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.jupyter_docker_image.docker_registry_image.jupyterlab";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.vertex_ai_workbench.google_project_service.notebooks" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.jupyter_docker_image.docker_registry_image.jupyterlab";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.google_compute_firewall.default-internal-allow-all";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.module.cloud-router.google_compute_router_nat.nats";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.module.vpc.module.routes.google_compute_route.route";
+  "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" -> "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host";
+  "module.vertex_ai_workbench.google_storage_bucket_iam_binding.binding" -> "module.vertex_ai_workbench.data.google_project.project";
+  "module.vertex_ai_workbench.google_storage_bucket_iam_binding.binding" -> "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket";
+  "module.vertex_ai_workbench.google_storage_bucket_object.post-startup" -> "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket";
+  "module.vpc.google_compute_firewall.default-internal-allow-all" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+  "module.vpc.google_compute_firewall.fw-allow-ingress-from-iap" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+  "module.vpc.module.cloud-router.google_compute_router.router" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+  "module.vpc.module.cloud-router.google_compute_router_nat.nats" -> "module.vpc.module.cloud-router.google_compute_router.router";
+  "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+  "module.vpc.module.vpc.module.firewall_rules.google_compute_firewall.rules_ingress_egress" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+  "module.vpc.module.vpc.module.routes.google_compute_route.route" -> "module.vpc.module.vpc.module.subnets.google_compute_subnetwork.subnetwork";
+  "module.vpc.module.vpc.module.subnets.google_compute_subnetwork.subnetwork" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+  "module.vpc.module.vpc.module.vpc.google_compute_shared_vpc_host_project.shared_vpc_host" -> "module.vpc.module.vpc.module.vpc.google_compute_network.network";
+}
