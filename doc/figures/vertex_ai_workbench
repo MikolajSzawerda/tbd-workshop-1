@@ -1,0 +1,21 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  subgraph "cluster_module.vertex_ai_workbench" {
+    label = "module.vertex_ai_workbench"
+    fontname = "sans-serif"
+    "module.vertex_ai_workbench.data.google_project.project" [label="data.google_project.project"];
+    "module.vertex_ai_workbench.google_notebooks_instance.tbd_notebook" [label="google_notebooks_instance.tbd_notebook"];
+    "module.vertex_ai_workbench.google_project_iam_binding.token_creator_role" [label="google_project_iam_binding.token_creator_role"];
+    "module.vertex_ai_workbench.google_project_service.notebooks" [label="google_project_service.notebooks"];
+    "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket" [label="google_storage_bucket.notebook-conf-bucket"];
+    "module.vertex_ai_workbench.google_storage_bucket_iam_binding.binding" [label="google_storage_bucket_iam_binding.binding"];
+    "module.vertex_ai_workbench.google_storage_bucket_object.post-startup" [label="google_storage_bucket_object.post-startup"];
+  }
+  "module.vertex_ai_workbench.google_notebooks_instance.tbd_notebook" -> "module.vertex_ai_workbench.google_project_service.notebooks";
+  "module.vertex_ai_workbench.google_notebooks_instance.tbd_notebook" -> "module.vertex_ai_workbench.google_storage_bucket_object.post-startup";
+  "module.vertex_ai_workbench.google_project_iam_binding.token_creator_role" -> "module.vertex_ai_workbench.data.google_project.project";
+  "module.vertex_ai_workbench.google_storage_bucket_iam_binding.binding" -> "module.vertex_ai_workbench.data.google_project.project";
+  "module.vertex_ai_workbench.google_storage_bucket_iam_binding.binding" -> "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket";
+  "module.vertex_ai_workbench.google_storage_bucket_object.post-startup" -> "module.vertex_ai_workbench.google_storage_bucket.notebook-conf-bucket";
+}

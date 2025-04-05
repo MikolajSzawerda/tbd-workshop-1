@@ -6,7 +6,11 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
    groupr nr: **z4**
 
-   repo: (github)[https://github.com/MikolajSzawerda/tbd-workshop-1]
+   repo: [MikolajSzawerda/tbd-workshop-1](https://github.com/MikolajSzawerda/tbd-workshop-1)
+
+   - Mikołaj Szawerda (318731)
+   - Anna Schafer
+   - Patryk Filip Gryz
 
 2. Follow all steps in README.md.
 
@@ -19,12 +23,24 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     
     2. Create PR from this branch to **YOUR** master and merge it to make new release. 
     
-    ***place the screenshot from GA after succesfull application of release***
+    ![alt text](doc/figures/suc_release.png)
 
 
 6. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
-    ***describe one selected module and put the output of terraform graph for this module here***
+    **Cluster structure**
+    ![terraform_graph](doc/figures/terraform_plan.png)
+
+    **Vertex AI module structure**
+    ![vertex_ai](doc/figures/vertex_ai_workbench.png)
+
+    This module defines all necessary resources to deploy Vertex AI Notebooks:
+
+    - Creates a storage bucket for notebook configurations, environment data, and includes a script for uploading them
+
+    - Provides bindings to a GCP project, with the ability to generate access tokens and connect to other GCP services (such as BigQuery)
+
+    The module is part of a larger Vertex AI GCP solution designed to streamline Big Data and AI tasks. It enables the creation of Jupyter-like environments that can integrate with services like BigQuery, Dataproc, and other GCP tools. Additionally, it supports machine learning model training and inference, offering advanced features such as distributed training, hyperparameter tuning, continuous training pipelines, and large-scale data analysis.
    
 7. Reach YARN UI
    ```shell
@@ -72,7 +88,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
    ```
   ![infracost_output](doc/infracost_output.png)
 
-10. Create a BigQuery dataset and an external table using SQL
+10.  Create a BigQuery dataset and an external table using SQL
 
     **Code**
     ```sql
