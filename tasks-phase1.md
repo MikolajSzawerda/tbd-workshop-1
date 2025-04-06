@@ -1,3 +1,13 @@
+---
+pdf-engine: lualatex
+mainfont: DejaVu Sans
+geometry: margin=1cm
+header-includes:
+  - \usepackage{etoolbox}
+  - \preto\section{\clearpage}
+  - \preto\subsection{\clearpage}
+  - \preto\subsubsection{\clearpage}
+---
 IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each work session. You can recreate infrastructure by creating new PR and merging it to master.
   
 ![img.png](doc/figures/destroy.png)
@@ -23,16 +33,18 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     
     2. Create PR from this branch to **YOUR** master and merge it to make new release. 
     
-    ![alt text](doc/figures/suc_release.png)
+    ![Release on Github Actions](doc/figures/suc_release.png)
 
 
 6. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
     **Cluster structure**
-    ![terraform_graph](doc/figures/terraform_plan.png)
+
+    ![Cluster structure](doc/figures/terraform_plan.png)
 
     **Vertex AI module structure**
-    ![vertex_ai](doc/figures/vertex_ai_workbench.png)
+
+    ![Vertex AI module structure](doc/figures/vertex_ai_workbench.png)
 
     This module defines all necessary resources to deploy Vertex AI Notebooks:
 
@@ -55,7 +67,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     3. List of buckets for disposal
     4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
   
-    ![architecture_diagram](doc/tbd-task-8.png)
+    ![Architecture diagram](doc/tbd-task-8.png)
 
 9. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
@@ -86,7 +98,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
         monthly_data_processed_gb: 200
 
    ```
-  ![infracost_output](doc/infracost_output.png)
+  ![Infracost output](doc/infracost_output.png)
 
 10. Create a BigQuery dataset and an external table using SQL
 
@@ -108,25 +120,33 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ```
 
     **Output**
+
     ![SQL tasks](tasks-phase1/big_query_results.png)
     ![Select results](tasks-phase1/big_query_results_shakespeare.png)
 
     **Why does ORC not require a table schema?**
+    
     The ORC (Optimized Row Columnar) format embeds the schema directly within the file, eliminating the need for an external table schema
 
 11. Find and correct the error in spark-job.py
+
     **Cause:**
+
     Incorrect name of the bucket in `spark-job.py`
 
     **How to find:**
+
     Task with incorrect bucket name is failing. In task view there is log with the exact error:
-    ![spark_failed.png](tasks-phase1/spark-failed.png)
+
+    ![Failed Spark job](tasks-phase1/spark-failed.png)
 
     **How to fix:**
+
     Change the name of the bucket to correct name, in our case `tbd-2025l-318731-data`
 
     **After the fix:**
-    ![spark_success.png](tasks-phase1/spark-success.png)
+
+    ![Spark job finished](tasks-phase1/spark-success.png)
 
 12. Add support for preemptible/spot instances in a Dataproc cluster
 
