@@ -157,6 +157,11 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ```tf
     preemptible_worker_config {
       num_instances = 1
+      preemptibility = "SPOT"
+      disk_config {
+        boot_disk_type    = "pd-standard"
+        boot_disk_size_gb = 100
+      }
     }
     ```
     
