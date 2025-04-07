@@ -64,8 +64,12 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 8. Draw an architecture diagram (e.g. in draw.io) that includes:
     1. VPC topology with service assignment to subnets
     2. Description of the components of service accounts
+        - tbd-2025l-318731-lab@tbd-2025l-318731.iam.gserviceaccount.com (tbd-terraform) - wykorzystywane do kominikacji oraz zarządzania infrastrukturą projektu w Google Cloud za pomocą Terraform, umożliwiając kontrolowanie zasobów i płynną integrację.
+        - 152206387777-compute@developer.gserviceaccount.com (iac) - zarządza tokenami dostępu oraz zapewnia płynną komunikację pomiędzy Githubem a Google Cloudem.
+        - tbd-2025l-318731-data@tbd-2025l-318731.iam.gserviceaccount.com (tbd-composer-sa) - koordynuje i zarzadza operacjami związanymi z danymi w obrębie środowisk Cloud Composer, klastrów Dataproc i innych powiązanych zadań.
     3. List of buckets for disposal
     4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
+        - Określenie hosta dla sterownika (driver) jest ważne, poniważ jest on potrzebny do koordynowania zadań, a węzły robocze (workers) muszą komunikować się z węzłem sterownika, który zwraca wynik.
   
     ![Architecture diagram](doc/tbd-task-8.png)
 
