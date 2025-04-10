@@ -64,10 +64,24 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 8. Draw an architecture diagram (e.g. in draw.io) that includes:
     1. VPC topology with service assignment to subnets
     2. Description of the components of service accounts
+        - tbd-2025l-318731-lab@tbd-2025l-318731.iam.gserviceaccount.com (tbd-terraform) - used for communication and managing the project's infrastructure in Google Cloud using Terraform, enabling resource control and seamless integration.
+        - 152206387777-compute@developer.gserviceaccount.com (iac) - manages access tokens and ensures seamless communication between GitHub and Google Cloud.
+        - tbd-2025l-318731-data@tbd-2025l-318731.iam.gserviceaccount.com (tbd-composer-sa) - coordinates and manages data-related operations within Cloud Composer environments, Dataproc clusters, and other related tasks.
     3. List of buckets for disposal
     4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
+        - Specifying the driver host is crucial because it orchestrates tasks, and the worker nodes need to communicate with the driver node to retrieve the final output.
+```md
+locals { #Spark ports from main.tf
+  ...
+  spark_driver_port       = 30000
+  spark_blockmgr_port     = 30001
+  ...
+}
+```
   
-    ![Architecture diagram](doc/tbd-task-8.png)
+![Architecture diagram](doc/tbd-task-8.png)
+
+
 
 9. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
@@ -100,7 +114,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
    ```
   ![Infracost output](doc/infracost_output.png)
 
-10. Create a BigQuery dataset and an external table using SQL
+1.  Create a BigQuery dataset and an external table using SQL
 
     **Code**
     ```sql
